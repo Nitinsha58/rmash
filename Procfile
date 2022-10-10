@@ -1,2 +1,2 @@
-release: python manage.py migrate
-web: gunicorn Rmash.wsgi --preload --log-file -
+web: gunicorn Rmash.wsgi
+web: python manage.py migrate && gunicorn Rmash.wsgi
