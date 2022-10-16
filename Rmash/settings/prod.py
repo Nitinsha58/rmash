@@ -19,6 +19,7 @@ DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+CSRF_TRUSTED_ORIGINS = env.list('ALLOWED_HOSTS')
 
 # Parse database connection url strings like psql://user:pass@127.0.0.1:8458/db
 DATABASES = {
