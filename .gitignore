@@ -13,3 +13,4 @@ config
 config.json
 *.json
 metatag.html
+.env
