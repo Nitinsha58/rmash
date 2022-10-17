@@ -1,5 +1,5 @@
 import environ
-# import os
+import os
 
 # If using in your own project, update the project namespace below
 from Rmash.settings.base import * 
@@ -9,8 +9,8 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-# env.read_env(os.path.join(BASE_DIR, '.env'))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # False if not in os.environ
 DEBUG = env('DEBUG')
