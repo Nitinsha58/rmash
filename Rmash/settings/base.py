@@ -117,3 +117,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# Page speed API
+import environ
+
+env = environ.Env()
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+env.read_env(os.path.join(BASE_DIR, '.env'))
+
+CLIENT_ID = env('CLIENT_ID')
+CLIENT_SECRET = env('CLIENT_SECRET')
+API_KEY = env('API_KEY')
