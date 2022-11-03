@@ -14,4 +14,4 @@ config.json
 *.json
 metatag.html
 .env
-/lodge-html
+/lodge-html  
