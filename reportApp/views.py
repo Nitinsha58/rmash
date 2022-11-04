@@ -38,7 +38,13 @@ def dashboard(request):
             context = {'err_msg': err_msg, "search": search_url}
             return render(request, 'reportApp/dashboard.html', context)
         else:
-            context = {'data': get_data(search_url), 'search':search_url}
+            data = get_data(search_url)
+            if data["error"]:
+                err_msg = "Unable to get the data for " + search_url
+                data = None
+            else:
+                err_msg = None
+            context = {'err_msg': err_msg, 'data': data, 'search':search_url}
             return render(request, 'reportApp/dashboard.html', context)
 
 

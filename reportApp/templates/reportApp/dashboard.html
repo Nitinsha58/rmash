@@ -19,7 +19,9 @@
                 </div>
             </div>
         </form>
-        <small class="text-danger">{{err_msg}}</small>
+        {% if err_msg %}
+            <small class="text-danger">{{err_msg}}</small>
+        {% endif %}
         <table class="table table-hover table-dark">
         <thead>
             <tr>
@@ -39,7 +41,9 @@
         </tbody>
         </table>
     </div>
-    {{data}}
+    {% if data %}
+        {{data}}
+    {% endif %}
 </div>
 {% endblock %}
 
