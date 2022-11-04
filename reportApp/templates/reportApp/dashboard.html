@@ -36,7 +36,7 @@
                 {% for report in reports %}
                     <tr>
                     <th scope="row">{{forloop.counter}}</th>
-                    <td><a class="text-white" href="">{{report.report_id}}</a></td>
+                    <td><a class="text-white" href="{% url 'report' report.id %}">{{report.report_id}}</a></td>
                     <td>{{report.updated_at|date:'M d Y'}}</td>
                     <td><a class="text-white" href="">Generate New</a></td>
                     </tr>

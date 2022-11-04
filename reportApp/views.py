@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 import re
 from users.forms import UserAuthenticationForm
-from users.models import CustomUser
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .page_speed_api import get_data
@@ -62,6 +61,9 @@ def dashboard(request):
 
 @login_required(login_url='home')
 def report(request, pk):
-
-    context = {}
+    reports = request.user.report.all().filter(id=pk)
+    data = None
+    if reports:
+        data = json.loads(reports[0].report_data)
+        context = {'data': data}
     return render(request, 'reportApp/report.html', context)
