@@ -45,6 +45,7 @@ def get_data(search_url = None):
         "category": ["performance", "seo", "accessibility", "best-practices", "pwa"]
     }
 
-    res = requests.get(url, params=params).text
-    data = json.loads(res)
+    res = requests.get(url, params=params)
+    
+    data = json.loads(res.text)
     return filterPageSpeedData(data)
