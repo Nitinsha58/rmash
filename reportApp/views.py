@@ -42,6 +42,8 @@ def dashboard(request):
         elif reports.filter(report_id=search_url):
             report = reports.filter(report_id=search_url)[0]
             data = json.loads(report.report_data)
+            r_id = request.user.report.all().filter(report_id=data["id"])[0].id
+            return redirect('report', r_id)
         else:
             data = get_data(search_url)
             if data["error"]:
@@ -51,6 +53,8 @@ def dashboard(request):
                 str_report_data = json.dumps(data)
                 reportObj = request.user.report.create(user=request.user, report_id=data["id"], report_data=str_report_data)
                 reportObj.save()
+            r_id = request.user.report.all().filter(report_id=data["id"])[0].id
+            return redirect('report', r_id)
 
         context = {'err_msg': err_msg, 'data': data, 'search':search_url, 'reports': reports}
         return render(request, 'reportApp/dashboard.html', context)
