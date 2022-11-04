@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import re
 from  users.forms import UserAuthenticationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from .page_speed_api import get_data
 
 # Create your views here.
@@ -19,11 +20,13 @@ def index(request):
     context = {'form':  form}
     return render(request, 'reportApp/home.html', context)
 
+@login_required(login_url='home')
 def logout_user(request):
     logout(request)
     # messages.info(request, 'You logged out successfully')
     return redirect('home')
 
+@login_required(login_url='home')
 def dashboard(request):
 
     search_url = ''
@@ -31,7 +34,7 @@ def dashboard(request):
         search_url = request.POST['search']
         string = re.match('(?i)(url:|origin:)?http(s)?://.*', search_url)
         if not string:
-            err_msg = "Urls mush should match the following example http(s)://example.com/"
+            err_msg = "Urls must match the following example http(s)://example.com/"
             context = {'err_msg': err_msg, "search": search_url}
             return render(request, 'reportApp/dashboard.html', context)
         else:
