@@ -67,3 +67,21 @@ def report(request, pk):
         data = json.loads(reports[0].report_data)
         context = {'data': data}
     return render(request, 'reportApp/report.html', context)
+
+
+@login_required(login_url='home')
+def regenerate(request, pk):
+    reports = request.user.report.all().filter(id=pk)
+    if (reports):
+        search_url = reports[0].report_id
+        print(search_url)
+        data = get_data(search_url)
+
+        str_report_data = json.dumps(data)
+
+        reportObj = reports[0]
+        reportObj.report_data=str_report_data
+        reportObj.save()
+
+        context={"data": data}
+    return render(request, 'reportApp/report.html', context)
