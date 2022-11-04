@@ -32,12 +32,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <th scope="row">{{forloop.counter}}</th>
-            <td><a class="text-white" href="">Mark</a></td>
-            <td>31/04/2020</td>
-            <td><a class="text-white" href="">Mark</a></td>
-            </tr>
+            {% if reports %}
+                {% for report in reports %}
+                    <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><a class="text-white" href="">{{report.report_id}}</a></td>
+                    <td>{{report.updated_at|date:'M d Y'}}</td>
+                    <td><a class="text-white" href="">Generate New</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <th colspan="4">No Data to show.</th>
+                </tr>
+            {% endif %}
         </tbody>
         </table>
     </div>
