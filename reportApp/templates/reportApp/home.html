@@ -17,20 +17,29 @@
         {% if request.user.email %}
             <img class="w-100" src="{% static 'reportApp/images/seo-img.svg' %}" alt="seo image">
         {% else %}
-            <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST">
-                {% csrf_token %}
-                <div class="form-floating mb-3">
-                    {{form.username}}
-                    <label for="floatingInput">Email address</label>
-                </div>
-                <div class="form-floating mb-3">
-                    {{form.password}}
-                    <label for="floatingPassword">Password</label>
-                </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
-                <hr class="my-4">
-                <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-            </form>
+        <p class="h4">Generate report</p>
+        <form action="{% url 'generate' %}" class="p-4 p-md-5 border rounded-3 bg-light" method="POST">
+          {% csrf_token %}
+          <div class="form-floating mb-3">
+              <input type="text" name="search" maxlength="254" class="form-control" id="floatingInput" placeholder="name@example.com" required="">
+              <label for="floatingInput">https://example.com/</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Generate Report</button>
+        </form>
+        <hr class="my-4">
+        <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                {{form.username}}
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+                {{form.password}}
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+            <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+        </form>
         {% endif %}
 
 
