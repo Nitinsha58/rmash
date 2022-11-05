@@ -78,7 +78,6 @@ def regenerate(request, pk):
     reports = request.user.report.all().filter(id=pk)
     if (reports):
         search_url = reports[0].report_id
-        print(search_url)
         data = get_data(search_url)
 
         str_report_data = json.dumps(data)
@@ -89,3 +88,25 @@ def regenerate(request, pk):
 
         context={"data": data}
     return render(request, 'reportApp/report.html', context)
+
+
+def generate(request):
+
+    if request.method == 'POST':
+        search_url = request.POST['search']
+        string = re.match('(?i)(url:|origin:)?http(s)?://.*', search_url)
+
+        if not string:
+            err_msg = "Urls must match the following example http(s)://example.com/"
+            return redirect('home')
+        else:
+            err_msg = None
+            data = get_data(search_url)
+            if data["error"]:
+                err_msg = "Unable to get the data for" + search_url
+                data = None
+            if data is None:
+                return redirect('home')
+        context={"data": data}
+        return render(request, 'reportApp/report.html', context)
+    return redirect('home')
