@@ -123,7 +123,9 @@ import environ
 
 env = environ.Env()
 env_file = env.read_env(os.path.join(BASE_DIR, '.env'))
-
-CLIENT_ID = env('CLIENT_ID')
-CLIENT_SECRET = env('CLIENT_SECRET')
-API_KEY = env('API_KEY')
+try:
+    CLIENT_ID = env('CLIENT_ID')
+    CLIENT_SECRET = env('CLIENT_SECRET')
+    API_KEY = env('API_KEY')
+except:
+    pass
