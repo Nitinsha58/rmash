@@ -46,7 +46,7 @@ ROOT_URLCONF = 'Rmash.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, '..', 'templates'],
+        'DIRS': [BASE_DIR, 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,8 +122,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 import environ
 
 env = environ.Env()
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-env.read_env(os.path.join(BASE_DIR, '.env'))
+env_file = env.read_env(os.path.join(BASE_DIR, '.env'))
 
 CLIENT_ID = env('CLIENT_ID')
 CLIENT_SECRET = env('CLIENT_SECRET')
