@@ -1,29 +1,29 @@
-import environ
-import os
-import dj_database_url
+import json
+
+with open('/etc/config.json') as config_file:
+    config = json.load(config_file)
+
 
 # If using in your own project, update the project namespace below
 from Rmash.base import * 
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-
-env.read_env(os.path.join(BASE_DIR, '.env'))
+SECRET_KEY = config['SECRET_KEY']
 
 # False if not in os.environ
-DEBUG = env('DEBUG')
+DEBUG = config['DEBUG']
 
-# Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
-SECRET_KEY = env('SECRET_KEY')
+ALLOWED_HOSTS = config['ALLOWED_HOSTS']
+CSRF_TRUSTED_ORIGINS = config['CSRF_TRUSTED_ORIGINS']
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
-# Parse database connection url strings like psql://user:pass@127.0.0.1:8458/db
-DATABASE_URL = os.environ['DATABASE_URL']
+# Database settings
 DATABASES = {
-    # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
-    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
-} 
+    'default': {
+        'ENGINE': config['db']['ENGINE'],
+        'NAME': config['db']['NAME'],
+        'USER': config['db']['USER'],
+        'PASSWORD': config['db']['PASSWORD'],
+        'HOST': config['db']['HOST'],
+        'PORT': config['db']['PORT'],
+    }
+}
