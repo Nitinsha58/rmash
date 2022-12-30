@@ -1,5 +1,5 @@
 from .models import Report
-from .serializers import ReportSerializer, CustomUserSerializer
+from .serializers import ReportSerializer, CustomUserSerializer, LoginSerializer
 
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -17,6 +17,8 @@ class ReportViewSet(viewsets.ModelViewSet):
     serializer_class = ReportSerializer
 
     def get_queryset(self):
+        if self.request.user.is_anonymous:
+            return Report.objects.none()
         return Report.objects.filter(user=self.request.user)
 
 
@@ -27,10 +29,13 @@ class CustomUserCreate(generics.CreateAPIView):
 
 class LoginView(APIView):
     permission_classes = ()
+    serializer_class = LoginSerializer
 
     def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
         user = authenticate(email=email, password=password)
         if user:
             return Response({"token": user.auth_token.key})

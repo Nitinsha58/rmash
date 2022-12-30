@@ -8,7 +8,7 @@ from users.models import CustomUser
 from rest_framework.authtoken.models import Token
 
 class ReportSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.ReadOnlyField()
+    id = serializers.ReadOnlyField(default=0)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     updated_at = serializers.ReadOnlyField()
     report_data = serializers.ReadOnlyField()
@@ -80,3 +80,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
         return user
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
